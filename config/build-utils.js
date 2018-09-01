@@ -14,7 +14,8 @@ const DEFAULT_METADATA = {
   AOT: process.env.BUILD_AOT || helpers.hasNpmFlag('aot'),
   E2E: !!process.env.BUILD_E2E,
   WATCH: helpers.hasProcessFlag('watch'),
-  tsConfigPath: 'tsconfig.webpack.json',
+  tsConfigPath: process.env.SERVER_PLATFORM ? 'tsconfig.server.json' : 'tsconfig.webpack.json',
+  SERVER_PLATFORM: process.env.SERVER_PLATFORM || false,
 
   /**
    * This suffix is added to the environment.ts file, if not set the default environment file is loaded (development)
@@ -80,10 +81,22 @@ function ngcWebpackSetup(prod, metadata) {
 
   const buildOptimizer = prod && metadata.AOT;
   const sourceMap = true; // TODO: apply based on tsconfig value?
-  const ngcWebpackPluginOptions = {
-    skipCodeGeneration: !metadata.AOT,
-    sourceMap
-  };
+  let ngcWebpackPluginOptions;
+  if (metadata.SERVER_PLATFORM) {
+    ngcWebpackPluginOptions = {
+      skipCodeGeneration: !metadata.AOT,
+      entryModule: helpers.root('src/app/app.server.module#AppServerModule'),
+      platform: 1,
+      mainPath: helpers.root("src/main.server.ts"),
+      tsConfigPath: helpers.root("tsconfig.server.json"),
+      sourceMap
+    };
+  } else {
+    ngcWebpackPluginOptions = {
+      skipCodeGeneration: !metadata.AOT,
+      sourceMap
+    };
+  }
 
   const environment = getEnvFile(metadata.envFileSuffix);
   if (environment) {

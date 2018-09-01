@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_ID, Inject, NgModule, PLATFORM_ID} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,7 @@ import { DevModuleModule } from './+dev-module';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
+import { isPlatformBrowser } from '@angular/common';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -51,7 +52,7 @@ interface StoreType {
    * Import Angular's modules.
    */
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'angular-starter' }),
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
@@ -75,4 +76,12 @@ interface StoreType {
     APP_PROVIDERS
   ]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }
+}

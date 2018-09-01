@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.webpack.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "baseUrl": "./src",
+    "module": "commonjs",
+    "types": [
+      "hammerjs",
+      "node"
+      ]
+  },
+  "exclude": [
+    "dist",
+    "src/**/*.spec.ts",
+    "src/**/*.e2e.ts"
+  ],
+  "angularCompilerOptions": {
+    "entryModule": "./src/app/app.server.module#AppServerModule"
+  }
+}
