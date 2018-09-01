@@ -85,6 +85,8 @@ module.exports = function(env) {
        */
       filename: '[name].js',
 
+      libraryTarget: 'commonjs',
+
       /**
        * The filename of the SourceMaps for the JavaScript files.
        * They are inside the output.path directory.
@@ -140,7 +142,6 @@ module.exports = function(env) {
     plugins: [
       new MiniCssExtractPlugin({ filename: '[name]-[hash].css', chunkFilename: '[name]-[chunkhash].css' }),
       new HashedModuleIdsPlugin()
-
     ],
 
     /**
@@ -149,6 +150,7 @@ module.exports = function(env) {
      *
      * See: https://webpack.js.org/configuration/node/
      */
+
     node: {
       global: true,
       crypto: 'empty',

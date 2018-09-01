@@ -7,7 +7,7 @@
     "types": [
       "hammerjs",
       "node"
-      ]
+    ]
   },
   "exclude": [
     "dist",
