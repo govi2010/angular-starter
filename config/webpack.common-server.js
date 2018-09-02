@@ -53,7 +53,7 @@ module.exports = function(options) {
      * See: https://webpack.js.org/configuration/resolve/
      */
     resolve: {
-      mainFields: [...(supportES2015 ? ['es2015'] : []), 'browser', 'module', 'main'],
+      mainFields: [...(supportES2015 ? ['es2015'] : []), 'module', 'main'],
 
       /**
        * An array of extensions that should be used to resolve modules.

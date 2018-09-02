@@ -2,8 +2,6 @@
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
-(global as any).XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
 import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
